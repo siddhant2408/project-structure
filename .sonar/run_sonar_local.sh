@@ -1,0 +1,3 @@
+#!/bin/sh
+go test -short -coverprofile=.sonar/cov.out ./...
+sonar-scanner -Dproject.settings=.sonar/properties/sonar-runner.properties

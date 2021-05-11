@@ -1,0 +1,8 @@
+.DS_Store
+.build/
+.env
+.vscode/
+.scannerwork
+.sonar/cov.out
+*.log
+.idea
