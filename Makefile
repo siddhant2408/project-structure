@@ -3,17 +3,17 @@ default: build
 
 all: clean build test
 
-GO_BUILD_DIR=build
+GO_BUILD_DIR=bin
 build:
 	mkdir -p $(GO_BUILD_DIR)
 	go build -o $(GO_BUILD_DIR) ./cmd/...
 
 test: build
-	go test -short -coverprofile=build/cov.out ./...
-	go tool cover -func=build/cov.out
+	go test -short -coverprofile=bin/cov.out ./...
+	go tool cover -func=bin/cov.out
 
 clean:
-	rm -rf ./build
+	rm -rf ./bin
 
 version := "1.0.0"
 sonar: test
