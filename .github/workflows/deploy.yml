@@ -2,7 +2,7 @@ on: push
 name: CI Workflow
 jobs:
   build:
-    name: Build, Test and Analyze
+    name: Build, Test, Lint and Analyze
     runs-on: ubuntu-latest
     steps:
       - name: Clone Repository
@@ -11,7 +11,7 @@ jobs:
         uses: actions/setup-go@v1
         with:
           go-version: '1.16.3'
-      - run: make test
+      - run: make
       - name: Archive code coverage results
         uses: actions/upload-artifact@v1
         with:
