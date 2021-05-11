@@ -1,0 +1,53 @@
+version:  '2.1'
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: sonar
+      POSTGRES_PASSWORD: sonar
+    volumes:
+       - pgdata:/var/lib/postgresql/data
+    networks:
+      - sonar_net
+  sonarqube:
+    image: sonarqube
+    ports:
+      - 9500:9000
+    environment:
+      - sonar.jdbc.url=jdbc:postgresql://postgres:5432/sonar
+    volumes:
+      - sonarqube_conf:/opt/sonarqube/conf
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+    networks: 
+      - sonar_net
+    depends_on:
+      - "postgres"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-u", "admin:admin", "http://sonarqube:9000/api/system/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+  sonarscanner:
+    image: newtmitch/sonar-scanner
+    stdin_open: true
+    tty: true
+    depends_on:
+      sonarqube:
+        condition: service_healthy
+    volumes:
+      - ../.:/usr/src
+      - ./properties/sonar-runner.properties:/usr/lib/sonar-scanner/conf/sonar-scanner.properties
+      - ./cov.out:/usr/lib/sonar-scanner/cov/cov.out
+    networks:
+      - sonar_net  
+    
+networks: 
+  sonar_net:
+    driver: bridge
+volumes:
+  pgdata:
+  sonarqube_conf:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonar.properties:

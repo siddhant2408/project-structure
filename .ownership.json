@@ -1,0 +1,15 @@
+{
+  "repository_name": "project-structure",
+  "description": "Project Structure For Golang Apps",
+  "directorate": "Tech",
+  "namespace": "Golang",
+  "security_owner": "sharmasiddhant50@gmail.com",
+  "app": [
+    {
+      "name": "http",
+      "description": "HTTP service",
+      "owner": "sharmasiddhant50@gmail.com"
+    }
+  ],
+  "last_update":"11/05/2021"
+}
